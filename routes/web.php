@@ -25,7 +25,15 @@ Route::get('test', function () {
     return response('un test', 206)->header('Content-Type', 'text/plain');
 });
 
-Route::get('/firstview', function() {
+Route::get('firstview', function(){
     return view('firstview');
+});
+
+Route::get('article/{n}', function($n){
+    return view('detailarticle')->with('numero', $n);
+})->where('n', '[0-9]+');
+
+Route::get('articles', function(){
+    return view('articles');
 });
     
