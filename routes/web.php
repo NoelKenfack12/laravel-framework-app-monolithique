@@ -1,7 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PhotoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,8 +18,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return ['un', 'deux', 'trois'];
-    return view('welcome');
+    //return ['un', 'deux', 'trois'];
+    return view('welcome1');
 });
 Route::get('noel/{n}', function($n){
     return 'Je suis la page ' . $n . ' !';
@@ -29,11 +33,22 @@ Route::get('firstview', function(){
     return view('firstview');
 });
 
-Route::get('article/{n}', function($n){
-    return view('detailarticle')->with('numero', $n);
-})->where('n', '[0-9]+');
+Route::get('index', [WelcomeController::class, 'index'])->name('home');
 
-Route::get('articles', function(){
-    return view('articles');
-});
+Route::get('/articles', [ArticleController::class, 'articles'])->name('list_articles');
+
+Route::get('article/{n}', [ArticleController::class, 'detailarticle'])
+        ->name('detailarticle_article')
+        ->where('n', '[0-9]+');
+
+Route::get('users', [UserController::class, 'create']);
+Route::post('users', [UserController::class, 'store']);
+
+Route::get('contact', [ContactController::class, 'contact']);
+Route::post('contact', [ContactController::class, 'store']);
+
+Route::get('photo', [PhotoController::class, 'create']);
+Route::post('photo', [PhotoController::class, 'store']);
+
+
     
